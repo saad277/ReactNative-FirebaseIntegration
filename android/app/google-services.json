@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "877280431920",
+    "firebase_url": "https://native-firebase-6eb6c.firebaseio.com",
+    "project_id": "native-firebase-6eb6c",
+    "storage_bucket": "native-firebase-6eb6c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:877280431920:android:d58a5e75845de8f9fc42f5",
+        "android_client_info": {
+          "package_name": "com.flash"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "877280431920-t9ldf2bfi52h1m3rka1gu2r3rnf7qf9p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpohgWqWEGo48hfiSrF1bAsuvEwRLLQB0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "877280431920-t9ldf2bfi52h1m3rka1gu2r3rnf7qf9p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
