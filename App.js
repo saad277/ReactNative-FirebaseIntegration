@@ -1,12 +1,5 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
 
-import React from 'react';
+import React, { Component } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -14,101 +7,175 @@ import {
   View,
   Text,
   StatusBar,
+  Button,
+  TextInput,
+  FlatList,
+  TouchableOpacity
 } from 'react-native';
 
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import firebase from 'react-native-firebase'
 
-const App: () => React$Node = () => {
-  return (
-    <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <Header />
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step 11</Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.js</Text> to change this
-                screen and then come back to see your edits.
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
-              </Text>
-            </View>
-            <LearnMoreLinks />
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    </>
-  );
+
+
+
+
+
+
+
+
+class App extends Component {
+
+
+  state = {
+
+    foods: [],
+    food:"",
+    color:""
+
+  }
+
+   addFood = (name,color) => {
+
+    firebase.firestore().collection("food").add({
+  
+      name: name,
+      color: color,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+  
+    }).then((snapshot) => snapshot.get()).then((foodData)=>{   //refresh front end
+      console.log(foodData.data())
+
+        let temp=foodData.data();
+
+      this.setState({
+
+          foods:[...this.state.foods,temp]
+      })
+
+      console.log(this.state)
+    
+    }).catch((error)=>console.log(error))
+  
+  }
+  
+
+
+
+
+
+  componentDidMount() {
+
+    const getFood = async () => {
+
+      var foodList = []
+
+      var snapshot = await firebase.firestore().collection("food").get();
+
+      
+
+      snapshot.forEach((doc) => {
+
+
+        foodList.push(doc.data())
+
+      })
+
+      this.setState({
+
+        foods: [...foodList]
+
+      })
+
+      
+
+
+    }
+
+
+
+    getFood();
+
+
+  }
+
+  render() {
+
+
+
+    return (
+
+      <View style={styles.container}>
+
+        <View>
+          <TextInput placeholder="AddFOOD" style={styles.input} 
+          onChangeText={(text)=>this.setState({food:text})}
+          value={this.state.food}
+          />
+          <TextInput placeholder="Color1" style={styles.input} 
+          onChangeText={(text)=>this.setState({color:text})} 
+          value={this.state.color}
+          />
+          <Button title="Submit" onPress={()=>this.addFood(this.state.food,this.state.color)} style={styles.btn}/>
+        </View>
+        <View>
+        <FlatList
+        data={this.state.foods}
+        renderItem={({item})=>{
+
+        return(
+        <TouchableOpacity><Text style={styles.item}>{item.name}{"\n"}{item.color}</Text>
+     
+      </TouchableOpacity>   
+        )
+
+        }}
+        />
+
+        </View>
+
+      </View>
+
+
+
+
+    );
+
+
+  }
+
+
+
 };
 
 const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
+
+  container: {
+
+    flex: 1
+
   },
-  engine: {
-    position: 'absolute',
-    right: 0,
+  input: {
+
+    borderColor: "black",
+    borderWidth: 2,
+    marginHorizontal: 4,
+    marginVertical: 4
   },
-  body: {
-    backgroundColor: Colors.white,
+  item:{
+    backgroundColor: 'lightgrey',
+    padding: 20,
+    
+    borderBottomWidth:2,
+    borderBottomColor:"black"
+   
   },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
-  },
+  btn:{
+
+    marginVertical:10
+
+
+  }
+
 });
 
 export default App;
