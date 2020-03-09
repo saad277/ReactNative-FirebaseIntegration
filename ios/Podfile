@@ -36,6 +36,8 @@ target 'flash' do
 
   pod 'RNFirebase', :path => '../node_modules/react-native-firebase'
 
+  pod 'react-native-safe-area-context', :path => '../node_modules/react-native-safe-area-context'
+
   target 'flashTests' do
     inherit! :search_paths
     # Pods for testing
