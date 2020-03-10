@@ -15,7 +15,7 @@ import {
 
 import firebase from 'react-native-firebase'
 
-
+import ActionButton from 'react-native-action-button'
 
 
 
@@ -26,15 +26,23 @@ import firebase from 'react-native-firebase'
 class Foods extends Component {
 
 
+  showActionButton = () => <ActionButton buttonColor="blue"
+                            onPress={()=>this.props.navigation.navigate("FoodForm")}
+                            />
 
 
-
-
-
-  static navigationOptions = ({navigation}) => {
-
- 
     
+
+
+  
+
+
+
+
+  static navigationOptions = ({ navigation }) => {
+
+
+
 
 
     return {
@@ -49,13 +57,13 @@ class Foods extends Component {
             onPress={() => {
 
               firebase.auth().signOut().
-              then(() => {
-      
+                then(() => {
+
                   console.log("user signed out")
                   navigation.navigate("Auth")
-      
-              })
-            } }
+
+                })
+            }}
           />
         )
 
@@ -71,34 +79,10 @@ class Foods extends Component {
   state = {
 
     foods: [],
-    food: "",
-    color: ""
+   
 
   }
 
-  addFood = (name, color) => {
-
-    firebase.firestore().collection("food").add({
-
-      name: name,
-      color: color,
-      createdAt: firebase.firestore.FieldValue.serverTimestamp()
-
-    }).then((snapshot) => snapshot.get()).then((foodData) => {   //refresh front end
-      console.log(foodData.data())
-
-      let temp = foodData.data();
-
-      this.setState({
-
-        foods: [...this.state.foods, temp]
-      })
-
-      console.log(this.state)
-
-    }).catch((error) => console.log(error))
-
-  }
 
 
 
@@ -148,25 +132,15 @@ class Foods extends Component {
 
       <View style={styles.container}>
 
-        <View>
-          <TextInput placeholder="AddFOOD" style={styles.input}
-            onChangeText={(text) => this.setState({ food: text })}
-            value={this.state.food}
-          />
-          <TextInput placeholder="Color1" style={styles.input}
-            onChangeText={(text) => this.setState({ color: text })}
-            value={this.state.color}
-          />
-          <Button title="Submit" onPress={() => this.addFood(this.state.food, this.state.color)} style={styles.btn} />
-        </View>
+
         <View>
           <FlatList
             data={this.state.foods}
             renderItem={({ item }) => {
 
               return (
-                <TouchableOpacity><Text style={styles.item}>{item.name}{"\n"}{item.color}</Text>
-
+                <TouchableOpacity>
+                  <Text style={styles.item}>{item.name}{"\n"}{item.color}</Text>
                 </TouchableOpacity>
               )
 
@@ -174,6 +148,11 @@ class Foods extends Component {
           />
 
         </View>
+
+
+        
+          {this.showActionButton()}
+       
 
       </View>
 
