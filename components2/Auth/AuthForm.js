@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, useEffect } from 'react'
 
 
 
@@ -13,7 +13,8 @@ import {
     TextInput,
     FlatList,
     TouchableOpacity,
-    Image
+    Image,
+    Alert
 } from 'react-native';
 
 import { withFormik } from 'formik'
@@ -26,7 +27,7 @@ const login = (email, password) => {
 
     firebase.auth().signInWithEmailAndPassword(email, password).
         then((value) => {
-            console.log(value)
+            console.warn(value)
 
         })
 
@@ -50,7 +51,15 @@ const signUp = (email, password, displayName) => {
 
 const AuthForm = (props) => {
 
-    console.log(props)
+
+    useEffect(() => {
+
+
+
+    }, [])
+
+
+    //console.log("checking@@@@",props)
 
     const DisplayNameInput = () => {
 
@@ -101,7 +110,7 @@ const AuthForm = (props) => {
                 backgroundColor="transparent"
                 title={props.authMode === "login" ? "Login" : "Create Account"}
                 buttonStyle={styles.loginButton}
-                onPress={() => props.handleSubmit()}
+                onPress={() => props.handleSubmit(props.authMode)}
             />
 
             <Button
@@ -176,20 +185,21 @@ export default withFormik({
     mapPropsToValues: () => {
 
         return {
-            email:"",
-            password:"",
-            displayName:"",
+            email: "",
+            password: "",
+            displayName: "",
         }
     },
     validationSchema: (props) => yup.object().shape({
         email: yup.string().email().required(),
         password: yup.string().min(6).required(),
-        //displayName: props.authMode == "signup" ?  yup.string().min(5).required() : null
+        displayName: props.authMode == "signup" ? yup.string().min(5).required() : null
     }),
     handleSubmit: (values, props) => {
 
         console.log(values)
-        props.authMode === 'login' ? login(values.email,values.password) :signUp(values.email,values.password)
+        props.props.authMode === 'login' ? login(values.email, values.password) : signUp(values.email, values.password)
+
     }
 
 })(AuthForm)

@@ -26,26 +26,15 @@ import firebase from 'react-native-firebase'
 class Foods extends Component {
 
 
-  signOut = () => {
-
-    firebase.auth().signOut().
-        then(() => {
-
-            console.log("user signed out")
-            this.props.navigation.navigate("Auth")
-
-        })
-
-
-}
 
 
 
 
 
-  static navigationOptions = (props) => {
+  static navigationOptions = ({navigation}) => {
 
  
+    
 
 
     return {
@@ -57,7 +46,16 @@ class Foods extends Component {
         return (
           <Button
             title="logout"
-            onPress={() => this.signOut()}
+            onPress={() => {
+
+              firebase.auth().signOut().
+              then(() => {
+      
+                  console.log("user signed out")
+                  navigation.navigate("Auth")
+      
+              })
+            } }
           />
         )
 
