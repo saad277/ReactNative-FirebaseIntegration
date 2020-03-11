@@ -139,8 +139,8 @@ class Foods extends Component {
             renderItem={({ item }) => {
 
               return (
-                <TouchableOpacity>
-                  <Text style={styles.item}>{item.name}{"\n"}{item.color}</Text>
+                <TouchableOpacity onPress={()=>this.props.navigation.navigate("FoodDetail",item)}>
+                  <Text style={styles.item}>{item.name}{"\n"}{item.category}</Text>
                 </TouchableOpacity>
               )
 
@@ -183,10 +183,10 @@ const styles = StyleSheet.create({
     marginVertical: 4
   },
   item: {
-    backgroundColor: 'lightgrey',
+    backgroundColor: 'white',
     padding: 20,
 
-    borderBottomWidth: 2,
+    borderBottomWidth: 1,
     borderBottomColor: "black"
 
   },

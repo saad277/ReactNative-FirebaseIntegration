@@ -1,21 +1,23 @@
 
 import React, { Component } from 'react';
 import {
-    SafeAreaView,
-    StyleSheet,
-    ScrollView,
-    View,
-    Text,
-    StatusBar,
-    Button,
-    TextInput,
-    FlatList,
-    TouchableOpacity
+  SafeAreaView,
+  StyleSheet,
+  ScrollView,
+  View,
+  Text,
+  StatusBar,
+  Button,
+  TextInput,
+  FlatList,
+  TouchableOpacity,
+  Alert
 } from 'react-native';
 
 import firebase from 'react-native-firebase'
 
-
+import { withFormik } from 'formik'
+import * as yup from 'yup';
 
 
 
@@ -23,68 +25,66 @@ import firebase from 'react-native-firebase'
 
 class FoodForm extends Component {
 
+  static navigationOptions = ({ navigation }) => {
 
-    state={
+    return {
 
-        food:"",
-        color:"",
-
+      title: "New Food"
     }
 
 
+  }
 
-    addFood = (name, color) => {
+  state = {
 
-        firebase.firestore().collection("food").add({
-    
-          name: name,
-          color: color,
-          createdAt: firebase.firestore.FieldValue.serverTimestamp()
-    
-        }).then((snapshot) => snapshot.get()).then((foodData) => {   //refresh front end
-          console.log(foodData.data())
-    
-          let temp = foodData.data();
-    
-          this.setState({
-    
-            foods: [...this.state.foods, temp]
-          })
-    
-          console.log(this.state)
-    
-        }).catch((error) => console.log(error))
-    
-      }
+    foodName: "",
+    category: "",
+    currentSubIngredient: null,
+    subIngredients: ["bread", "meat", "vegetables"]
+  }
 
 
 
 
-    render() {
 
-        return (
-            <View>
-                  <View>
-          <TextInput placeholder="AddFOOD" style={styles.input}
+
+
+  render() {
+
+    return (
+      <View style={styles.container}>
+        <TextInput
+          style={styles.longFormInput}
+          placeholder="Name"
+          onChangeText={(text) => this.props.setFieldValue("name", text)}
+        />
+        <Text style={styles.validationText}>{this.props.errors.name}</Text>
+        <TextInput
+          style={styles.longFormInput}
+          placeholder="Category"
+          onChangeText={(text) => this.props.setFieldValue("category", text)}
+        />
+        <Text style={styles.validationText}>{this.props.errors.category}</Text>
+
+
+        <View style={styles.row}>
+          <TextInput placeholder="Ingredient" style={styles.formInput}
             onChangeText={(text) => this.setState({ food: text })}
             value={this.state.food}
           />
-          <TextInput placeholder="Color1" style={styles.input}
-            onChangeText={(text) => this.setState({ color: text })}
-            value={this.state.color}
-          />
-          <Button title="Submit" onPress={() => this.addFood(this.state.food, this.state.color)} style={styles.btn} />
+
+          <Button title="Submit" onPress={() => this.props.handleSubmit()} style={styles.btn} />
         </View>
-            </View>
+      </View>
 
 
-        )
+    )
 
 
 
 
 
-    }
+  }
 
 
 
@@ -97,7 +97,43 @@ class FoodForm extends Component {
 
 const styles = StyleSheet.create({
 
+  row: {
 
+    justifyContent: "space-between",
+    alignSelf: "stretch",
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 32
+
+
+  },
+  container: {
+
+    width: 300,
+    alignSelf: "center",
+    alignItems: "center",
+    marginTop: 32
+
+  },
+
+  formInput: {
+
+    borderColor: "#B5B4BC",
+    borderWidth: 1,
+    padding: 8,
+    height: 50,
+    width: "75%"
+
+  },
+  longFormInput: {
+
+    width: "100%",
+    height: 50,
+    borderColor: "#B5B4BC",
+    borderWidth: 1,
+    padding: 8,
+    margin: 16,
+  }
 
 
 })
@@ -106,4 +142,31 @@ const styles = StyleSheet.create({
 
 
 
-export default FoodForm;
+export default withFormik({
+
+  mapPropsToValues: () => {
+
+    return {
+      name: "",
+      category: "",
+
+    }
+  },
+  validationSchema: (props) => yup.object().shape({
+    name: yup.string().max(30).required(),
+    category: yup.string().max(15).required(),
+
+  }),
+  handleSubmit: (values, {props}) => {
+
+    console.log(values)
+
+    console.log(props.addFood(values.name,values.category))
+
+
+
+
+
+  }
+
+})(FoodForm)
