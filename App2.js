@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import Foods from './components2/foods'
 import FoodForm from './components2/FoodForm1'
 import FoodDetail from './components2/foodDetail'
+import EditFood from './components2/editFood1'
 
 import LoginScreen from './components2/Auth/LoginScreen'
 
@@ -25,11 +26,15 @@ import { createDrawerNavigator } from 'react-navigation-drawer';
 import { createStackNavigator } from 'react-navigation-stack'
 
 
+
 const AppStack = createStackNavigator({
 
   FoodList:Foods,
   FoodForm:FoodForm,
   FoodDetail:FoodDetail,
+  EditFood:EditFood,
+  
+ 
 
 
 })

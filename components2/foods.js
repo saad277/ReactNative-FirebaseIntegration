@@ -101,8 +101,10 @@ class Foods extends Component {
 
       snapshot.forEach((doc) => {
 
+        const foodItem=doc.data();
+        foodItem.id=doc.id;                     // get id 
 
-        foodList.push(doc.data())
+        foodList.push(foodItem);
 
       })
 
