@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import Foods from './components2/foods'
 import FoodForm from './components2/FoodForm1'
 import FoodDetail from './components2/foodDetail'
-import EditFood from './components2/editFood1'
+import EditFood from './components2/EditFood'
 
 import LoginScreen from './components2/Auth/LoginScreen'
 
@@ -33,6 +33,7 @@ const AppStack = createStackNavigator({
   FoodForm:FoodForm,
   FoodDetail:FoodDetail,
   EditFood:EditFood,
+  
   
  
 

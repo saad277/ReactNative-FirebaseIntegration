@@ -23,7 +23,7 @@ import * as yup from 'yup';
 
 
 
-class EditFood extends Component {
+class EditFood1 extends Component {
 
   static navigationOptions = ({ navigation }) => {
 
@@ -51,7 +51,7 @@ class EditFood extends Component {
 
   render() {
 
-    const id=this.props.navigation.getParam("id")
+    
     
 
     return (
@@ -164,6 +164,8 @@ export default withFormik({
 
     console.log(values)
 
+   props.updateFood(values.name,values.category)
+
    
 
 
@@ -172,4 +174,4 @@ export default withFormik({
 
   }
 
-})(EditFood);
+})(EditFood1);

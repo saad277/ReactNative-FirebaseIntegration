@@ -27,16 +27,7 @@ class FoodDetail extends Component {
         return {
 
             title: "Detail",
-            headerRight: () => {
-
-                return (
-                    <Button
-                        onPress={() =>{}}
-                        title="Edit"
-                    />
-                )
-
-            }
+          
         }
 
 

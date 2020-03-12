@@ -161,7 +161,7 @@ export default withFormik({
 
     console.log(values)
 
-    console.log(props.addFood(values.name, values.category))
+    props.addFood(values.name, values.category)
 
 
 
