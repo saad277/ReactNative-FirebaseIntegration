@@ -19,6 +19,7 @@ import firebase from 'react-native-firebase'
 import { withFormik } from 'formik'
 import * as yup from 'yup';
 
+import ImagePicker from './imagePicker'
 
 
 
@@ -44,15 +45,26 @@ class FoodForm extends Component {
   }
 
 
+  setFoodImage = (image) => {
 
+    this.props.setFieldValue("imageUri", image.uri)
+
+    console.log(".......")
+    console.log(image.uri)
+
+  }
 
 
 
 
   render() {
 
+        console.log("this.props.image");
+       
+
     return (
       <View style={styles.container}>
+        <ImagePicker onImagePicked={this.setFoodImage} />
         <TextInput
           style={styles.longFormInput}
           placeholder="Name"
@@ -149,6 +161,7 @@ export default withFormik({
     return {
       name: "",
       category: "",
+      imageUri: null
 
     }
   },

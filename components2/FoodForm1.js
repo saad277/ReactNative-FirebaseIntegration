@@ -47,7 +47,13 @@ class FoodForm1 extends Component {
     
         }).catch((error) => console.log(error))
     
-        .then((snapshot) => snapshot.get()).then((foodData) => {   //refresh front end
+        .then((snapshot) => {
+          
+          name.id=snapshot.id           //document snapshot id
+          snapshot.set(name)
+        
+        })
+        .then((foodData) => {   //refresh front end
           console.log(foodData.data())
     
           let temp = foodData.data();
@@ -61,6 +67,18 @@ class FoodForm1 extends Component {
     
         }).catch((error) => console.log(error))
     
+      }
+
+
+      uploadFoodImage=(name,{updating})=>{
+
+          if(name.imageUri){
+
+                const fileExtension=name.imageUri.split(".").pop()
+                console.log(fileExtension)
+          }
+
+
       }
 
     render() {

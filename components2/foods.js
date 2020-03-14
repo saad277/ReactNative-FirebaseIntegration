@@ -27,14 +27,14 @@ class Foods extends Component {
 
 
   showActionButton = () => <ActionButton buttonColor="blue"
-                            onPress={()=>this.props.navigation.navigate("FoodForm")}
-                            />
+    onPress={() => this.props.navigation.navigate("FoodForm")}
+  />
 
 
-    
 
 
-  
+
+
 
 
 
@@ -79,7 +79,7 @@ class Foods extends Component {
   state = {
 
     foods: [],
-   
+
 
   }
 
@@ -101,8 +101,8 @@ class Foods extends Component {
 
       snapshot.forEach((doc) => {
 
-        const foodItem=doc.data();
-        foodItem.id=doc.id;                     // get id 
+        const foodItem = doc.data();
+        foodItem.id = doc.id;                     // get id 
 
         foodList.push(foodItem);
 
@@ -141,7 +141,7 @@ class Foods extends Component {
             renderItem={({ item }) => {
 
               return (
-                <TouchableOpacity onPress={()=>this.props.navigation.navigate("FoodDetail",item)}>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate("FoodDetail", item)}>
                   <Text style={styles.item}>{item.name}{"\n"}{item.category}</Text>
                 </TouchableOpacity>
               )
@@ -152,9 +152,9 @@ class Foods extends Component {
         </View>
 
 
-        
-          {this.showActionButton()}
-       
+
+        {this.showActionButton()}
+
 
       </View>
 
