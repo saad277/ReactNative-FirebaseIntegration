@@ -11,7 +11,9 @@ import {
   TextInput,
   FlatList,
   TouchableOpacity,
-  Alert
+  Image,
+  Alert,
+ 
 } from 'react-native';
 
 import { Divider, Icon } from 'react-native-elements'
@@ -65,6 +67,7 @@ class FoodDetail extends Component {
     const ingredients = this.props.navigation.getParam("subIngredients");
     const category = this.props.navigation.getParam("category");
     const id = this.props.navigation.getParam("id");
+    const image = this.props.navigation.getParam("image");
 
 
     return (
@@ -94,6 +97,7 @@ class FoodDetail extends Component {
 
 
         <Text style={styles.headerText}>{name}</Text>
+        <Image source={{uri:image}} style={styles.image} />
         <Text style={styles.categoryText}>Category : {category}</Text>
         <Text style={styles.ingredientText}>Ingredients</Text>
         {ingredients === undefined || ingredients.length == 0 ? <Text>None</Text> :
@@ -170,6 +174,10 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     width: 200,
     borderColor: 'grey'
+  },
+  image:{
+    width:200,
+    height:160,
   }
 });
 

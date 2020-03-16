@@ -46,7 +46,8 @@ const ImagePicker1 = ({ image, onImagePicked }) => {
 
         ImagePicker.showImagePicker(options, (response) => {
 
-            //console.log(response)
+           // console.log("response uri......")
+            //console.log(response.uri)
             if (response.error) {
 
                 console.log("Image Error....")
@@ -55,7 +56,7 @@ const ImagePicker1 = ({ image, onImagePicked }) => {
 
                 console.log("Image : PICKED" )
                 setSelectedImage({ uri: response.uri })
-                onImagePicked({ uri: response.uri })
+                onImagePicked({ uri: response })
             }
 
 

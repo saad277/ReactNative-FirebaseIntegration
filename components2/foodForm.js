@@ -47,10 +47,9 @@ class FoodForm extends Component {
 
   setFoodImage = (image) => {
 
-    this.props.setFieldValue("imageUri", image.uri)
+    this.props.setFieldValue("imageUri", image)
 
-    console.log(".......")
-    console.log(image.uri)
+    
 
   }
 
@@ -59,7 +58,7 @@ class FoodForm extends Component {
 
   render() {
 
-        console.log("this.props.image");
+        
        
 
     return (
@@ -172,9 +171,17 @@ export default withFormik({
   }),
   handleSubmit: (values, { props }) => {
 
-    console.log(values)
+    //console.log(values)
 
-    props.addFood(values.name, values.category)
+   // props.addFood(values.name, values.category)
+
+   
+   console.log("values.......")
+   
+   console.log(values.name);
+   console.log(values.category)
+   
+   props.uploadFood(values,{updating:true})
 
 
 

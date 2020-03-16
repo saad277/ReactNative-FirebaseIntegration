@@ -10,12 +10,15 @@ import {
   Button,
   TextInput,
   FlatList,
-  TouchableOpacity
+  TouchableOpacity,
+  Image
 } from 'react-native';
 
 import firebase from 'react-native-firebase'
 
 import ActionButton from 'react-native-action-button'
+
+import { ListItem, Divider } from 'react-native-elements'
 
 
 
@@ -135,19 +138,39 @@ class Foods extends Component {
       <View style={styles.container}>
 
 
+
         <View>
           <FlatList
             data={this.state.foods}
             renderItem={({ item }) => {
 
               return (
-                <TouchableOpacity onPress={() => this.props.navigation.navigate("FoodDetail", item)}>
-                  <Text style={styles.item}>{item.name}{"\n"}{item.category}</Text>
-                </TouchableOpacity>
+
+
+                <ListItem
+                  title={item.name}
+                  subtitle={item.category}
+                  leftAvatar={{
+
+                    size: "large",
+                    rounded: "false",
+                    source: item.image && { uri: item.image }
+                  }}
+
+                  onPress={() => this.props.navigation.navigate("FoodDetail", item)}
+
+
+
+
+
+                />
+
               )
 
             }}
           />
+
+
 
         </View>
 
@@ -197,7 +220,8 @@ const styles = StyleSheet.create({
     marginVertical: 10
 
 
-  }
+  },
+
 
 });
 
